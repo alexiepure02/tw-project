@@ -1,0 +1,90 @@
+$primary-color: #26255b;
+$secondary-color: #39407f;
+$text-color: #e7ecef;
+$button-color: #657ed4;
+
+.header {
+  display: flex;
+  padding: 0px 0px;
+  background: $secondary-color;
+  color: $text-color;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.header h1 {
+  font-size: 40;
+  font-weight: bold;
+  margin: 10px 0px;
+  padding-left: 10px;
+}
+
+.header .fill {
+  margin: 0px;
+  flex-grow: 1;
+}
+
+.button1 {
+  background-color: $button-color;
+  color: $text-color;
+  border: none;
+  padding: 17px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 0px;
+  margin: 12px 6px;
+  cursor: pointer;
+  border-radius: 30px;
+}
+
+.button2 {
+  background-color: $button-color;
+  color: $text-color;
+  border: none;
+  padding: 12px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 12px 6px;
+  cursor: pointer;
+  border-radius: 30px;
+}
+
+.button:hover {
+  background-color: transparent;
+}
+
+.home {
+  background-color: $primary-color;
+  color: $text-color;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+ // gap: 2.5em 0;
+}
+
+.title {
+  font-size: 48px;
+  //margin: 0px 15%;
+  text-align: center;
+}
+
+.email-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.email-input {
+ // width: calc(400px + 0.3vw);
+ // height: calc(40px + 0.3vh);
+  font-size: 1em;
+  background-color: $secondary-color;
+  color: $text-color;
+  margin: 0px 10px;
+}
