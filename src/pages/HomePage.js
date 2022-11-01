@@ -1,17 +1,19 @@
 import React, { useState } from "react";
-import Button from "./Button";
+import { useNavigate } from "react-router-dom";
+import Button from "../components/Button";
 
 const HomePage = () => {
   const [email, setEmail] = useState("");
 
+  const navigate = useNavigate();
+
   const onAuthenticationClick = () => {
-    console.log("auth");
+    navigate("/login");
   };
 
   const onRegisterClick = () => {
-    console.log("register");
     console.log(email);
-    setEmail("");
+    navigate("/register");
   };
 
   return (
@@ -22,7 +24,6 @@ const HomePage = () => {
       </h1>
       <form className="email-form">
         <input
-          className="email-input"
           type="text"
           id="email"
           name="email"
