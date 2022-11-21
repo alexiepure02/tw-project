@@ -1,15 +1,25 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
+import { UserContext } from "../UserContextProvider";
 
 const LoginPage = () => {
+  const { setUserContext } = useContext(UserContext);
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  
+
+  const navigate = useNavigate();
+
   const onContinueClick = () => {
-    console.log("auth");
     console.log(username, password);
     setUsername("");
     setPassword("");
+    setUserContext({
+      id: 1,
+      name: "Alex",
+    });
+    navigate('/');
   };
 
   return (
@@ -20,18 +30,20 @@ const LoginPage = () => {
           type="text"
           id="username"
           name="username"
+          placeholder="Nume de utilizator"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
         <input
-          type="text"
+          type="password"
           id="password"
           name="password"
+          placeholder="Parolă"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
         <Button variant="1" onClick={onContinueClick}>
-          Continua
+          Continuă
         </Button>
       </form>
     </div>

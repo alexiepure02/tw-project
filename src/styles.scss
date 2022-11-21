@@ -7,6 +7,21 @@ body {
   background-color: $primary-color;
 }
 
+// global
+
+input {
+  width: 400px;
+  height: 50px;
+  font-size: 1.8em;
+  margin-bottom: 10px;
+  border-radius: 0.2em;
+  border: none;
+  background-color: $secondary-color;
+  color: $text-color;
+}
+
+// header
+
 .header {
   display: flex;
   align-items: center;
@@ -18,19 +33,17 @@ body {
   width: 100%;
 }
 
-.header .logo {
-  padding-left: 10px;
-  cursor: pointer;
-
-  h1 {
-    margin: 0px;
-  }
-}
-
-.header .fill {
-  margin: 0px;
+.header .logo-container {
   flex-grow: 1;
 }
+
+.header .logo-container .logo {
+  margin: 11px 0px;
+  padding-left: 10px;
+  cursor: pointer;
+}
+
+// button
 
 .button {
   background-color: $button-color;
@@ -59,37 +72,83 @@ body {
   margin: 12px 6px;
 }
 
-.home {
+// home unsigned
+
+@media only screen and (max-width: 768px) {
+  .header-unsigned {
+    display: none;
+  }
+
+  .home-unsigned {
+    flex-direction: row;
+    justify-content: end;
+
+    .title-desktop {
+      display: none;
+    }
+
+    .title-mobile {
+      display: block;
+      flex: 1;
+      padding-top: 50px;
+      font-size: 3em;
+    }
+
+    input,
+    p {
+      display: none;
+    }
+
+    Button {
+      margin-top: 0px;
+      margin-bottom: 30px;
+    }
+  }
+}
+
+@media only screen and (min-width: 769px) {
+  // i can't override display: none if i declare it
+  // globally, so i have to create a media query just
+  // for this..
+  .home-unsigned .title-mobile {
+    display: none;
+  }
+}
+
+.home-unsigned {
   color: $text-color;
   height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
 
-.title {
-  font-size: 48px;
-  margin: 150px 15% 50px 15%;
-  text-align: center;
-}
+  .title-desktop {
+    font-size: 48px;
+    margin: 150px 15% 50px 15%;
+    text-align: center;
+  }
 
-.email-form {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
+  .email-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
 
-  input {
-    width: 400px;
-    height: 40px;
-    font-size: 1.8em;
-    background-color: $secondary-color;
-    color: $text-color;
-    margin: 0px 10px;
+    input {
+      margin: 0px 10px;
+    }
   }
 }
 
+// login
+
 .login {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
   color: $text-color;
 }
 
@@ -99,13 +158,144 @@ body {
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
+}
 
-  input {
-    width: 400px;
-    height: 40px;
-    font-size: 1.8em;
-    background-color: $secondary-color;
-    color: $text-color;
-    margin-bottom: 10px;
+// register
+
+.register {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  color: $text-color;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  .full-name {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    input {
+      width: 192px;
+    }
+    :first-child {
+      margin-right: 12px;
+    }
+  }
+}
+
+// home signed
+
+@media only screen and (max-width: 768px) {
+
+}
+
+.home-signed {
+  margin-top: 50px;
+
+  color: $text-color;
+  display: flex;
+  flex-direction: column;
+
+  .section-title {
+    margin: 0;
+    font-size: 1.5em;
+    margin-left: 32px;
+  }
+
+  .row {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+
+  .cards {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: auto;
+  }
+
+  .cards::-webkit-scrollbar {
+    display: none;
+  }
+
+  .card {
+    margin: 12px 10px;
+  }
+
+  .card:first-child {
+    margin-left: 32px;
+  }
+
+  .card:last-child {
+    margin-right: 32px;
+  }
+
+  .card {
+    position: relative;
+    text-align: left;
+    transition: all 0.5s ease;
+  }
+
+  .card:hover {
+    transition-delay: 0.3s;
+    transform: scale(1.1);
+
+    .card-gradient {
+      background: linear-gradient(transparent, black);
+    }
+
+    .details {
+      display: inline;
+    }
+
+    .buttons {
+      display: flex;
+    }
+  }
+
+  .movie-cover {
+    position: relative;
+    z-index: -1;
+    display: block;
+  }
+
+  .details {
+    display: none;
+    position: absolute;
+    bottom: 8px;
+    left: 16px;
+
+    .title {
+      font-size: 1.5em;
+      margin: 0;
+    }
+
+    .duration {
+      font-size: 0.8em;
+      margin: 0px 0px 5px 0px;
+    }
+  }
+
+  .buttons {
+    display: none;
+    position: absolute;
+    bottom: 8px;
+    right: 16px;
+
+    .play-button {
+      cursor: pointer;
+      margin: 0px 3px;
+    }
   }
 }
