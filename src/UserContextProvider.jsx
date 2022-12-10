@@ -11,10 +11,10 @@ export const UserContextProvider = ({ children }) => {
   const [authenticated, setAuthenticated] = useState(false);
 
   useEffect(() => {
-    // setUserContext({
-    //   id: 1,
-    //   name: "Alex",
-    // });
+    setUserContext({
+      id: 1,
+      name: "Alex",
+    });
   }, []);
 
   const setUserContext = async (userInfo) => {

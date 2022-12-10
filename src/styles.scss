@@ -23,24 +23,34 @@ input {
 // header
 
 .header {
-  display: flex;
-  align-items: center;
-  padding: 0px;
   background-color: $secondary-color;
   color: $text-color;
   position: fixed;
   top: 0;
   width: 100%;
+  z-index: 2;
 }
 
-.header .logo-container {
-  flex-grow: 1;
+.header .logo {
+  margin: 6px;
+  float: left;
+  padding: 8px;
 }
 
-.header .logo-container .logo {
-  margin: 11px 0px;
-  padding-left: 10px;
+.header .logo:hover {
   cursor: pointer;
+}
+
+.header-unsigned Button {
+  float: right;
+}
+
+.header .menu-burger {
+  width: 50px;
+  height: 50px;
+  float: right;
+  text-align: center;
+  margin: 25px;
 }
 
 // button
@@ -69,7 +79,7 @@ input {
 .button2 {
   font-size: 14px;
   padding: 12px 25px;
-  margin: 12px 6px;
+  margin: 15px 6px;
 }
 
 // home unsigned
@@ -196,106 +206,270 @@ input {
 
 // home signed
 
-@media only screen and (max-width: 768px) {
-
+header {
+  display: inline;
 }
 
 .home-signed {
-  margin-top: 50px;
-
+  margin-top: 100px;
   color: $text-color;
   display: flex;
   flex-direction: column;
+}
 
-  .section-title {
-    margin: 0;
-    font-size: 1.5em;
-    margin-left: 32px;
-  }
+.home-signed .carousel-row {
+  margin-bottom: 20px;
+}
 
-  .row {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
-  }
+.carousel-row {
+  display: flex;
+  flex-direction: column;
+}
 
-  .cards {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow: auto;
-  }
+.carousel-row .section-title {
+  margin: 0;
+  font-size: 1.5em;
+  margin-left: 32px;
+}
 
-  .cards::-webkit-scrollbar {
-    display: none;
-  }
+.carousel-row .cards {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow: auto;
+}
 
-  .card {
-    margin: 12px 10px;
-  }
+.carousel-row .cards::-webkit-scrollbar {
+  display: none;
+}
 
-  .card:first-child {
-    margin-left: 32px;
-  }
+.carousel-row .cards .card {
+  z-index: 1;
+  margin: 12px 10px;
+  position: relative;
+  text-align: left;
+  transition: all 0.5s ease;
+}
 
-  .card:last-child {
-    margin-right: 32px;
-  }
+.carousel-row .cards .card:first-child {
+  margin-left: 32px;
+}
 
-  .card {
-    position: relative;
-    text-align: left;
-    transition: all 0.5s ease;
-  }
+.carousel-row .cards .card:last-child {
+  margin-right: 32px;
+}
 
-  .card:hover {
-    transition-delay: 0.3s;
-    transform: scale(1.1);
-
-    .card-gradient {
-      background: linear-gradient(transparent, black);
-    }
-
-    .details {
-      display: inline;
-    }
-
-    .buttons {
-      display: flex;
-    }
-  }
-
-  .movie-cover {
-    position: relative;
-    z-index: -1;
-    display: block;
+.carousel-row .cards .card:hover {
+  transition-delay: 0.3s;
+  transform: scale(1.1);
+  .card-gradient {
+    background: linear-gradient(transparent, black);
   }
 
   .details {
-    display: none;
-    position: absolute;
-    bottom: 8px;
-    left: 16px;
-
-    .title {
-      font-size: 1.5em;
-      margin: 0;
-    }
-
-    .duration {
-      font-size: 0.8em;
-      margin: 0px 0px 5px 0px;
-    }
+    display: inline;
   }
 
-  .buttons {
-    display: none;
-    position: absolute;
-    bottom: 8px;
-    right: 16px;
+  // .buttons {
+  //   display: flex;
+  // }
+}
 
-    .play-button {
-      cursor: pointer;
-      margin: 0px 3px;
-    }
+.movie-cover-card {
+  position: relative;
+  z-index: -1;
+  display: block;
+}
+
+.details {
+  display: none;
+  position: absolute;
+  bottom: 8px;
+  left: 16px;
+
+  .title {
+    font-size: 1.5em;
+    margin: 0;
+  }
+
+  .duration {
+    font-size: 0.8em;
+    margin: 0px 0px 5px 0px;
+  }
+}
+
+.buttons {
+  display: none;
+  position: absolute;
+  bottom: 8px;
+  right: 16px;
+
+  .play-button {
+    cursor: pointer;
+    margin: 0px 3px;
+  }
+}
+
+// sidebar
+
+/* Position and sizing of burger button */
+.bm-burger-button {
+  position: relative;
+  width: 45px;
+  height: 30px;
+
+  margin: 20px;
+
+  // right: 25px;
+  // top: 20px;
+  /* right: 0; */
+  float: right;
+}
+/* Color/shape of burger icon bars */
+.bm-burger-bars {
+  background: $text-color;
+}
+
+/* Color/shape of burger icon bars on hover*/
+.bm-burger-bars-hover {
+  background: $primary-color;
+}
+
+/* Position and sizing of clickable cross button */
+.bm-cross-button {
+  height: 24px;
+  width: 24px;
+  margin-right: 17px;
+  margin-top: 11px;
+}
+
+/* Color/shape of close button cross */
+.bm-cross {
+  background: $text-color;
+}
+
+/*
+Sidebar wrapper styles
+Note: Beware of modifying this element as it can break the animations - you should not need to touch it in most cases
+*/
+.bm-menu-wrap {
+  position: fixed;
+  height: 100%;
+}
+
+/* General sidebar styles */
+.bm-menu {
+  background: $primary-color;
+  padding: 4.5em 1.5em 0;
+  font-size: 1.15em;
+}
+
+/* Morph shape necessary with bubble or elastic */
+.bm-morph-shape {
+  fill: $primary-color;
+}
+
+/* Wrapper for item list */
+.bm-item-list {
+  color: $text-color;
+}
+
+/* Individual item */
+.bm-item {
+  margin: 0px;
+  color: #d1d1d1;
+  margin-bottom: 20px;
+}
+
+.bm-item:hover {
+  cursor: pointer;
+}
+
+// movie
+
+.cover-container {
+  height: 100vh;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.movie-cover {
+  height: 100vh;
+  width: 100vw;
+  z-index: -1;
+  object-fit: cover;
+  filter: saturate(140%);
+  position: fixed;
+}
+
+.overlay {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(
+    transparent,
+    rgba(19, 21, 21, 0.2),
+    rgba(19, 21, 21, 0.4),
+    rgba(19, 21, 21, 0.6),
+    rgba(19, 21, 21, 0.8),
+    rgba(19, 21, 21, 0.9),
+    rgba(19, 21, 21, 0.98),
+    rgba(19, 21, 21, 01)
+  );
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.overlay .left {
+  display: flex;
+  flex-direction: column;
+  padding-left: 50px;
+}
+
+.overlay .left h1,
+h4 {
+  margin: 0px;
+  color: $text-color;
+}
+
+.overlay .left h4 {
+  margin-bottom: 25px;
+}
+
+.overlay .right {
+  padding-right: 50px;
+}
+
+.content {
+  color: $text-color;
+  background: #131515;
+  padding: 50px;
+  display: flex;
+}
+
+.content .left {
+  padding: 25px 25px 25px 0px;
+  flex: 1 0 60%;
+}
+
+.content .right {
+  padding: 25px;
+  background: rgba(29, 32, 32, 0.4);
+}
+
+.recommendations {
+  color: $text-color;
+  background: #131515;
+  padding: 50px 0px;
+}
+
+@media (max-width: 768px) {
+  .content {
+    flex-direction: column;
+  }
+
+  .content .right {
+    align-self: center;
   }
 }

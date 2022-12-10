@@ -8,6 +8,7 @@ import NoPage from "./pages/NoPage";
 import { UserContextProvider } from "./UserContextProvider";
 
 import "./styles.scss";
+import MoviePage from "./pages/MoviePage";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path="login" element={<LoginPage />} />
             <Route path="register" element={<RegisterPage />} />
             <Route path="*" element={<NoPage />} />
+            <Route path="movie" element={<MoviePage />} />
           </Route>
         </Routes>
       </BrowserRouter>
