@@ -1,19 +1,26 @@
 import React, { useContext } from "react";
+import MovieCard from "../components/MovieCard";
 import MoviesCarousel from "../components/MoviesCarousel";
+import { getMovies } from "../functions/api";
 import { UserContext } from "../UserContextProvider";
 
 const HomePageSignedIn = () => {
   const { userName } = useContext(UserContext);
 
+  const movies = getMovies(5);
+
   return (
     <div className="home-signed">
-      <MoviesCarousel numberOfMovies="10" sectionTitle="Section title" />
-      <MoviesCarousel numberOfMovies="7" sectionTitle="Section title" />
-      <MoviesCarousel numberOfMovies="8" sectionTitle="Section title" />
-      <MoviesCarousel numberOfMovies="20" sectionTitle="Section title" />
-      <MoviesCarousel numberOfMovies="16" sectionTitle="Section title" />
-      <MoviesCarousel numberOfMovies="24" sectionTitle="Section title" />
-      <MoviesCarousel numberOfMovies="12" sectionTitle="Section title" />
+      <MoviesCarousel movies={movies} sectionTitle="Section title" />
+      <MoviesCarousel movies={movies} sectionTitle="Section title" />
+      <MoviesCarousel movies={movies} sectionTitle="Section title" />
+      <MoviesCarousel movies={movies} sectionTitle="Section title" />
+      <MoviesCarousel movies={movies} sectionTitle="Section title" />
+      <MoviesCarousel movies={movies} sectionTitle="Section title" />
+      <MoviesCarousel movies={movies} sectionTitle="Section title" />
+      <MoviesCarousel movies={movies} sectionTitle="Section title" />
+      <MoviesCarousel movies={movies} sectionTitle="Section title" />
+      <MoviesCarousel movies={movies} sectionTitle="Section title" />
     </div>
   );
 };

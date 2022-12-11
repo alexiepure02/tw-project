@@ -217,32 +217,32 @@ header {
   flex-direction: column;
 }
 
-.home-signed .carousel-row {
+.home-signed .carousel-movies {
   margin-bottom: 20px;
 }
 
-.carousel-row {
+.carousel-movies {
   display: flex;
   flex-direction: column;
 }
 
-.carousel-row .section-title {
+.carousel-movies .section-title {
   margin: 0;
   font-size: 1.5em;
   margin-left: 32px;
 }
 
-.carousel-row .cards {
+.carousel-movies .cards {
   display: flex;
   flex-wrap: nowrap;
   overflow: auto;
 }
 
-.carousel-row .cards::-webkit-scrollbar {
+.carousel-movies .cards::-webkit-scrollbar {
   display: none;
 }
 
-.carousel-row .cards .card {
+.carousel-movies .cards .card {
   z-index: 1;
   margin: 12px 10px;
   position: relative;
@@ -250,15 +250,15 @@ header {
   transition: all 0.5s ease;
 }
 
-.carousel-row .cards .card:first-child {
+.carousel-movies .cards .card:first-child {
   margin-left: 32px;
 }
 
-.carousel-row .cards .card:last-child {
+.carousel-movies .cards .card:last-child {
   margin-right: 32px;
 }
 
-.carousel-row .cards .card:hover {
+.carousel-movies .cards .card:hover {
   transition-delay: 0.3s;
   transform: scale(1.1);
   .card-gradient {
@@ -472,4 +472,24 @@ h4 {
   .content .right {
     align-self: center;
   }
+}
+
+// rented movies
+
+.rented-movies {
+  margin-top: 100px;
+}
+
+.grid-movies {
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.grid-item {
+  background-color: rgba(255, 255, 255, 0.8);
+  // border: 1px solid rgba(0, 0, 0, 0.8);
+  // padding: 20px;
+  // font-size: 30px;
+  // text-align: center;
 }

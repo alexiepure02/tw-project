@@ -9,8 +9,11 @@ import { UserContextProvider } from "./UserContextProvider";
 
 import "./styles.scss";
 import MoviePage from "./pages/MoviePage";
+import RentedMoviesPage from "./pages/RentedMoviesPage";
 
 function App() {
+  const id = 3;
+
   return (
     <UserContextProvider>
       <BrowserRouter>
@@ -19,8 +22,9 @@ function App() {
             <Route index element={<Home />} />
             <Route path="login" element={<LoginPage />} />
             <Route path="register" element={<RegisterPage />} />
+            <Route path="movie/:id" element={<MoviePage />} />
+            <Route path="rented-movies" element={<RentedMoviesPage />} />
             <Route path="*" element={<NoPage />} />
-            <Route path="movie" element={<MoviePage />} />
           </Route>
         </Routes>
       </BrowserRouter>

@@ -29,7 +29,7 @@ const Header = () => {
     <>
       <div className={"header header-" + headerPrefix + "signed"}>
         <h1 className="logo" onClick={(e) => navigate("/")}>
-          Movie Rental
+          bunnyTV
         </h1>
         {!authenticated ? (
           <>
