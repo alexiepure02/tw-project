@@ -1,10 +1,9 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
-import { UserContext } from "../UserContextProvider";
+import { login } from "../functions/authentication";
 
 const LoginPage = () => {
-  const { setUserContext } = useContext(UserContext);
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -15,11 +14,12 @@ const LoginPage = () => {
     console.log(username, password);
     setUsername("");
     setPassword("");
-    setUserContext({
-      id: 1,
-      name: "Alex",
-    });
-    navigate('/');
+    login("aaa", "bbb");
+    // setUserContext({
+    //   id: 1,
+    //   name: "Alex",
+    // });
+    navigate("/movies");
   };
 
   return (

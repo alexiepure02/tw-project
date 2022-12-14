@@ -1,19 +1,19 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
+import { checkIfAuthenticated } from "../functions/authentication";
 
 import "../styles.scss";
-import { UserContext } from "../UserContextProvider";
 import Button from "./Button";
 
 import Sidebar from "./Sidebar";
 
 const Header = () => {
-  const { authenticated } = useContext(UserContext);
+  const isAuthenticated = checkIfAuthenticated();
   const [headerPrefix, setHeaderPrefix] = useState();
 
   useEffect(() => {
-    setHeaderPrefix(authenticated ? "" : "un");
-  }, [authenticated]);
+    setHeaderPrefix(isAuthenticated ? "" : "un");
+  }, [isAuthenticated]);
 
   const navigate = useNavigate();
 
@@ -28,10 +28,15 @@ const Header = () => {
   return (
     <>
       <div className={"header header-" + headerPrefix + "signed"}>
-        <h1 className="logo" onClick={(e) => navigate("/")}>
+        <h1
+          className="logo"
+          onClick={(e) =>
+            isAuthenticated ? navigate("/movies") : navigate("/")
+          }
+        >
           bunnyTV
         </h1>
-        {!authenticated ? (
+        {!isAuthenticated ? (
           <>
             <Button variant="2" onClick={onAuthenticationClick}>
               Autentificare

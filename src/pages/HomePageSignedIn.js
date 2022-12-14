@@ -1,12 +1,8 @@
-import React, { useContext } from "react";
-import MovieCard from "../components/MovieCard";
+import React from "react";
 import MoviesCarousel from "../components/MoviesCarousel";
 import { getMovies } from "../functions/api";
-import { UserContext } from "../UserContextProvider";
 
 const HomePageSignedIn = () => {
-  const { userName } = useContext(UserContext);
-
   const movies = getMovies(5);
 
   return (
