@@ -242,12 +242,17 @@ header {
   display: none;
 }
 
-.carousel-movies .cards .card {
+/*.carousel-movies .cards */
+.card {
   z-index: 1;
-  margin: 12px 10px;
+  // margin: 12px 10px;
   position: relative;
   text-align: left;
   transition: all 0.5s ease;
+}
+
+.carousel-movies .cards .card {
+  margin: 12px 10px;
 }
 
 .carousel-movies .cards .card:first-child {
@@ -258,7 +263,8 @@ header {
   margin-right: 32px;
 }
 
-.carousel-movies .cards .card:hover {
+/*.carousel-movies .cards */
+.card:hover {
   transition-delay: 0.3s;
   transform: scale(1.1);
   .card-gradient {
@@ -477,19 +483,21 @@ h4 {
 // rented movies
 
 .rented-movies {
+  color: $text-color;
   margin-top: 100px;
 }
 
 .grid-movies {
+  margin: 0px 25px;
   display: grid;
+
   grid-gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
 }
 
-.grid-item {
-  background-color: rgba(255, 255, 255, 0.8);
-  // border: 1px solid rgba(0, 0, 0, 0.8);
-  // padding: 20px;
-  // font-size: 30px;
-  // text-align: center;
+@media (max-width: 768px) {
+  .grid-movies {
+    margin: 0px 10px;
+    place-items: center;
+  }
 }
