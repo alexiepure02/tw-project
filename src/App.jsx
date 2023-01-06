@@ -11,23 +11,26 @@ import HomePageSignedIn from "./pages/HomePageSignedIn";
 
 import "./styles.scss";
 import PrivateRoutes from "./PrivateRoutes";
+import RentMoviePage from "./pages/RentMoviePage";
+import PlayMoviePage from "./pages/PlayMoviePage";
+import Completion from "./pages/Completion";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Header />}>
-          {/* <Route element={<UnauthenticatedWrapper />}> */}
           <Route index element={<HomePageUnsigned />} />
           <Route path="login" element={<LoginPage />} />
           <Route path="register" element={<RegisterPage />} />
-          {/* </Route> */}
-          {/* <Route element={<AuthenticatedWrapper />}> */}
           <Route element={<PrivateRoutes />}>
             <Route path="movies" element={<HomePageSignedIn />} />
             <Route path="movie/:id" element={<MoviePage />} />
             <Route path="rented-movies" element={<RentedMoviesPage />} />
+            <Route path="rent-movie/:id" element={<RentMoviePage />} />
+            <Route path="play/:id" element={<PlayMoviePage />} />
             <Route path="account" element={<AccountPage />} />
+            <Route path="/completion" element={<Completion />} />
           </Route>
           <Route path="*" element={<NoPage />} />
         </Route>

@@ -482,6 +482,11 @@ h4 {
 
 // rented movies
 
+.rented-movies-title {
+  font-size: 1.75em;
+  margin-left: 24px;
+}
+
 .rented-movies {
   color: $text-color;
   margin-top: 100px;
@@ -500,4 +505,59 @@ h4 {
     margin: 0px 10px;
     place-items: center;
   }
+}
+
+// account
+
+.account {
+  color: $text-color;
+  margin-top: 100px;
+}
+
+// icon
+
+.icon {
+  color: $text-color;
+  font-size: 1.7em;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+
+.icon:hover {
+  transition-delay: 0.2s;
+  transform: scale(1.2);
+}
+
+// rent-movie
+
+.rent-movie {
+  color: $text-color;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rent-movie .payment-card {
+  background-color: $secondary-color;
+  display: flex;
+  border-radius: 8px;
+  padding: 35px;
+  box-shadow: 0px 10px 50px 1px rgb(10, 10, 10);
+}
+
+.rent-movie .movie-info {
+  margin-right: 35px;
+}
+
+.rent-movie .movie-info .movie-cover-card {
+  z-index: 1;
+}
+
+.rent-movie .payment-info form {
+  display: flex;
+  flex-direction: column;
+  align-items: ce;
+  // margin: 100px;
+  // align-items: right;
 }

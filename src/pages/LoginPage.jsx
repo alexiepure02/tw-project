@@ -4,22 +4,20 @@ import Button from "../components/Button";
 import { login } from "../functions/authentication";
 
 const LoginPage = () => {
-
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
 
   const navigate = useNavigate();
 
-  const onContinueClick = () => {
-    console.log(username, password);
-    setUsername("");
-    setPassword("");
-    login("aaa", "bbb");
-    // setUserContext({
-    //   id: 1,
-    //   name: "Alex",
-    // });
-    navigate("/movies");
+  const onContinueClick = async () => {
+    try {
+      await login(username, password);
+      navigate("/movies");
+    } catch (err) {
+      console.log(err);
+      setError("Invalid username or password");
+    }
   };
 
   return (
@@ -42,6 +40,7 @@ const LoginPage = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
+        {error && <p style={{color: "red"}}>{error}</p>}
         <Button variant="1" onClick={onContinueClick}>
           Continuă
         </Button>

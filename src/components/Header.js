@@ -34,7 +34,7 @@ const Header = () => {
             isAuthenticated ? navigate("/movies") : navigate("/")
           }
         >
-          bunnyTV
+          BunnyTV
         </h1>
         {!isAuthenticated ? (
           <>

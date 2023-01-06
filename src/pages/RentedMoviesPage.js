@@ -16,7 +16,7 @@ const RentedMoviesPage = (props) => {
 
   return (
     <div className="rented-movies">
-      <h1>Filmele tale inchiriate</h1>
+      <h1 className="rented-movies-title">Filmele tale inchiriate</h1>
       <div className="grid-movies">{rentedMovieCards}</div>
     </div>
   );

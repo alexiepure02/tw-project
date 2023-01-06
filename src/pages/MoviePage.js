@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { AiFillPlayCircle } from "react-icons/ai/";
-import { useParams } from "react-router-dom";
+import { IconContext } from "react-icons";
+import { AiFillPlusCircle, AiFillPlayCircle } from "react-icons/ai";
+import { useNavigate, useParams } from "react-router-dom";
 import MovieCard from "../components/MovieCard";
 import MoviesCarousel from "../components/MoviesCarousel";
 import { getMovie, getRecommendations } from "../functions/api";
@@ -10,10 +11,21 @@ const MoviePage = () => {
   const [movie, setMovie] = useState(null);
   const [recommendedMovies, setRecommendedMovies] = useState(null);
 
+  const navigate = useNavigate();
+  const rented = false;
+
   useEffect(() => {
     setMovie(getMovie(id));
     setRecommendedMovies(getRecommendations(5));
   }, [id]);
+
+  const goToRentMoviePage = () => {
+    navigate("/rent-movie/" + id);
+  };
+
+  const goToPlayMoviePage = () => {
+    navigate("/play/" + id);
+  };
 
   return (
     movie && (
@@ -26,9 +38,18 @@ const MoviePage = () => {
               <h4 className="duration">{movie.duration}</h4>
             </div>
             <div className="right">
-              {/* <h1>AAA</h1> */}
               <h1 className="play-button">
-                <AiFillPlayCircle />
+                {rented ? (
+                  <AiFillPlayCircle
+                    className="icon"
+                    onClick={goToPlayMoviePage}
+                  />
+                ) : (
+                  <AiFillPlusCircle
+                    className="icon"
+                    onClick={goToRentMoviePage}
+                  />
+                )}
               </h1>
             </div>
           </div>

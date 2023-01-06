@@ -6,6 +6,11 @@ import { logout } from "../functions/authentication";
 const Sidebar = (props) => {
   const navigate = useNavigate();
 
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
+
   return (
     <Menu right>
       <h4 className="menu-item" onClick={(e) => navigate("/movies")}>
@@ -17,17 +22,7 @@ const Sidebar = (props) => {
       <h4 className="menu-item" onClick={(e) => navigate("/rented-movies")}>
         Filmele tale
       </h4>
-      <h4 className="menu-item" onClick={(e) => navigate("/settings")}>
-        Setari
-      </h4>
-      <h4
-        className="menu-item"
-        onClick={(e) => {
-          logout();
-          navigate("/");
-        }}
-        style={{ color: "red" }}
-      >
+      <h4 className="menu-item" onClick={handleLogout} style={{ color: "red" }}>
         Logout
       </h4>
     </Menu>
