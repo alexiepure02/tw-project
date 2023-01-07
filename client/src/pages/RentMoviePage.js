@@ -24,26 +24,20 @@ const RentMoviePage = () => {
 
   useEffect(() => {
     setMovie(getMovie(id));
-  }, []);
 
-  useEffect(() => {
-    fetch("http://localhost:8800/config").then(async (r) => {
-      const { publishableKey } = await r.json();
+    fetch("http://localhost:8800/create-payment-intent", {
+      method: "POST",
+      body: JSON.stringify({}),
+    }).then(async (result) => {
+      var { publishableKey, clientSecret } = await result.json();
+
       console.log(publishableKey);
       setStripePromise(loadStripe(publishableKey));
+
+      console.log(clientSecret);
+      setClientSecret(clientSecret);
     });
   }, []);
-
-  // useEffect(() => {
-  //   fetch("http://localhost:8800/create-payment-intent", {
-  //     method: "POST",
-  //     body: JSON.stringify({}),
-  //   }).then(async (result) => {
-  //     var { clientSecret } = await result.json();
-  //     console.log(clientSecret);
-  //     setClientSecret(clientSecret);
-  //   });
-  // }, []);
 
   return (
     movie && (

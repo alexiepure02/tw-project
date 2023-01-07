@@ -36,20 +36,7 @@ app.use("/movies", movieRoutes);
 // stripe
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
-app.use(express.static(__dirname));
-
-console.log(__dirname);
-
-app.get("/", (req, res) => {
-  const path = resolve(__dirname + "/index.html");
-  res.sendFile(path);
-});
-
-app.get("/config", (req, res) => {
-  res.send({
-    publishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
-  });
-});
+app.use(express.static(process.env.STATIC_DIR));
 
 app.post("/create-payment-intent", async (req, res) => {
   try {
@@ -61,6 +48,7 @@ app.post("/create-payment-intent", async (req, res) => {
 
     // Send publishable key and PaymentIntent details to client
     res.send({
+      publishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
       clientSecret: paymentIntent.client_secret,
     });
   } catch (e) {
