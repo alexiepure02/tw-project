@@ -39,10 +39,11 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 app.use(express.static(process.env.STATIC_DIR));
 
 app.post("/create-payment-intent", async (req, res) => {
+  console.log(req.body.amount);
   try {
     const paymentIntent = await stripe.paymentIntents.create({
-      currency: "EUR",
-      amount: 499,
+      currency: "RON",
+      amount: req.body.amount,
       automatic_payment_methods: { enabled: true },
     });
 
