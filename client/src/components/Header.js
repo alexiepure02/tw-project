@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import { checkIfAuthenticated } from "../functions/authentication";
+import {
+  checkIfAuthenticated,
+  checkIfTokenExpired,
+  logout,
+} from "../functions/authentication";
 
 import "../styles.scss";
 import Button from "./Button";
@@ -11,11 +15,16 @@ const Header = () => {
   const isAuthenticated = checkIfAuthenticated();
   const [headerPrefix, setHeaderPrefix] = useState();
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     setHeaderPrefix(isAuthenticated ? "" : "un");
+    if (isAuthenticated) {
+      if (checkIfTokenExpired()) {
+        logout();
+      }
+    }
   }, [isAuthenticated]);
-
-  const navigate = useNavigate();
 
   const onAuthenticationClick = () => {
     navigate("/login");

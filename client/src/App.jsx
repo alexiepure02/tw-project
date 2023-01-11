@@ -13,7 +13,8 @@ import "./styles.scss";
 import PrivateRoutes from "./PrivateRoutes";
 import RentMoviePage from "./pages/RentMoviePage";
 import PlayMoviePage from "./pages/PlayMoviePage";
-import Completion from "./pages/Completion";
+import CompletionPage from "./pages/CompletionPage";
+import SelectRentingPeriodPage from "./pages/SelectRentingPeriodPage";
 
 function App() {
   return (
@@ -26,11 +27,15 @@ function App() {
           <Route element={<PrivateRoutes />}>
             <Route path="movies" element={<HomePageSignedIn />} />
             <Route path="movie/:id" element={<MoviePage />} />
+            <Route
+              path="movie/:id/select-rent-period"
+              element={<SelectRentingPeriodPage />}
+            />
+            <Route path="movie/:id/rent-movie" element={<RentMoviePage />} />
+            <Route path="movie/:id/completed-payment" element={<CompletionPage />} />
             <Route path="rented-movies" element={<RentedMoviesPage />} />
-            <Route path="rent-movie/:id" element={<RentMoviePage />} />
             <Route path="play/:id" element={<PlayMoviePage />} />
             <Route path="account" element={<AccountPage />} />
-            <Route path="/completion" element={<Completion />} />
           </Route>
           <Route path="*" element={<NoPage />} />
         </Route>

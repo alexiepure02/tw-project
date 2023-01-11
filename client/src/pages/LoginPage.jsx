@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import { login } from "../functions/authentication";
 
+import PasswordInput from "../components/PasswordInput";
+
 const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -32,15 +34,14 @@ const LoginPage = () => {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
-        <input
-          type="password"
+        <PasswordInput
           id="password"
           name="password"
           placeholder="Parolă"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          password={password}
+          setPassword={setPassword}
         />
-        {error && <p style={{color: "red"}}>{error}</p>}
+        {error && <p style={{ color: "red" }}>{error}</p>}
         <Button variant="1" onClick={onContinueClick}>
           Continuă
         </Button>

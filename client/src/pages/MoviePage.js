@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
-import { IconContext } from "react-icons";
 import { AiFillPlusCircle, AiFillPlayCircle } from "react-icons/ai";
 import { useNavigate, useParams } from "react-router-dom";
-import MovieCard from "../components/MovieCard";
 import MoviesCarousel from "../components/MoviesCarousel";
 import { getMovie, getRecommendations } from "../functions/api";
 
@@ -19,12 +17,12 @@ const MoviePage = () => {
     setRecommendedMovies(getRecommendations(5));
   }, [id]);
 
-  const goToRentMoviePage = () => {
-    navigate("/rent-movie/" + id);
+  const goToSelectRentingPeriodPage = () => {
+    navigate("./select-rent-period");
   };
 
   const goToPlayMoviePage = () => {
-    navigate("/play/" + id);
+    navigate("./play");
   };
 
   return (
@@ -47,7 +45,7 @@ const MoviePage = () => {
                 ) : (
                   <AiFillPlusCircle
                     className="icon"
-                    onClick={goToRentMoviePage}
+                    onClick={goToSelectRentingPeriodPage}
                   />
                 )}
               </h1>

@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { getMovie } from "../functions/api";
 
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import CheckoutForm from "../components/CheckoutForm";
+
+import axios from "axios";
 
 const appearance = {
   theme: "night",
@@ -16,35 +18,41 @@ const appearance = {
 
 const RentMoviePage = () => {
   const { id } = useParams();
+  const { state } = useLocation();
 
   const [movie, setMovie] = useState(null);
 
   const [stripePromise, setStripePromise] = useState(null);
   const [clientSecret, setClientSecret] = useState("");
 
+  const createPaymentIntent = async () => {
+    const response = await axios.post(
+      "http://localhost:8800/create-payment-intent",
+      { amount: state.price * 100 }
+    );
+    var { publishableKey, clientSecret } = await response.data;
+
+    console.log(publishableKey);
+    setStripePromise(loadStripe(publishableKey));
+
+    console.log(clientSecret);
+    setClientSecret(clientSecret);
+  };
+
   useEffect(() => {
     setMovie(getMovie(id));
 
-    fetch("http://localhost:8800/create-payment-intent", {
-      method: "POST",
-      body: JSON.stringify({}),
-    }).then(async (result) => {
-      var { publishableKey, clientSecret } = await result.json();
-
-      console.log(publishableKey);
-      setStripePromise(loadStripe(publishableKey));
-
-      console.log(clientSecret);
-      setClientSecret(clientSecret);
-    });
+    createPaymentIntent();
   }, []);
 
   return (
     movie && (
       <div className="rent-movie">
-        <div className="payment-card">
+        <div className="container">
           <div className="movie-info">
-            <h1 className="title">{movie.title}</h1>
+            <h2 className="title">{movie.title}</h2>
+            <h3 className="period">Perioadă: {state.period} zile</h3>
+            <h3 className="price">Preț: {state.price} lei</h3>
             <img className="movie-cover-card" src={movie.thumbnailCover} />
           </div>
           <div className="payment-info">
@@ -53,7 +61,11 @@ const RentMoviePage = () => {
                 stripe={stripePromise}
                 options={{ clientSecret, appearance }}
               >
-                <CheckoutForm />
+                <CheckoutForm
+                  movieId={id}
+                  movieName={movie.title}
+                  period={state.period}
+                />
               </Elements>
             )}
           </div>

@@ -1,16 +1,21 @@
 import { PaymentElement } from "@stripe/react-stripe-js";
 import { useState } from "react";
 import { useStripe, useElements } from "@stripe/react-stripe-js";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { getUserInfo } from "../functions/authentication";
 
-export default function CheckoutForm() {
+export default function CheckoutForm(props) {
   const stripe = useStripe();
   const elements = useElements();
+
+  const { id } = useParams();
 
   const [message, setMessage] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
 
   const navigate = useNavigate();
+
+  const userInfo = getUserInfo();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,6 +31,8 @@ export default function CheckoutForm() {
     const { paymentIntent, error } = await stripe.confirmPayment({
       elements,
       redirect: "if_required",
+      description: "User Id: " + userInfo.id + "; Movie Id: " + id,
+      receipt_email: userInfo.email,
       // confirmParams: {
       //   // Make sure to change this to your payment completion page
       //   // return_url: `${window.location.origin}/completion`,
@@ -35,7 +42,12 @@ export default function CheckoutForm() {
     if (paymentIntent !== undefined) {
       // add movie to user's rented movies
 
-      navigate("/completion");
+      navigate("/movie/" + id + "/completed-payment", {
+        state: {
+          movieName: props.movieName,
+          period: props.period,
+        },
+      });
     }
 
     if (error) {

@@ -19,8 +19,6 @@ export const login = async (username, password) => {
     password: password,
   });
 
-  console.log(response.data);
-
   localStorage.setItem("auth-token", response.data.accessToken);
 };
 

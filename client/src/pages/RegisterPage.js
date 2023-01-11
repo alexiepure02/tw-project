@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import Button from "../components/Button";
+import PasswordInput from "../components/PasswordInput";
 
 const RegisterPage = () => {
   const location = useLocation();
@@ -62,24 +63,22 @@ const RegisterPage = () => {
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
-        <input
-          type="password"
+        <PasswordInput
           id="password"
           name="password"
           placeholder="Parolă"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          password={password}
+          setPassword={setPassword}
         />
-        <input
-          type="password"
+        <PasswordInput
           id="password2"
           name="password2"
           placeholder="Confirmă parola"
-          value={password2}
-          onChange={(e) => setPassword2(e.target.value)}
+          password={password2}
+          setPassword={setPassword2}
         />
         <Button variant="1" onClick={onContinueClick}>
-          Continua
+          Continuă
         </Button>
       </form>
     </div>
