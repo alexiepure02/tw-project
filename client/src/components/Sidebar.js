@@ -14,7 +14,7 @@ const Sidebar = (props) => {
   return (
     <Menu right>
       <h4 className="menu-item" onClick={(e) => navigate("/movies")}>
-        Acasa
+        Acasă
       </h4>
       <h4 className="menu-item" onClick={(e) => navigate("/account")}>
         Contul tău

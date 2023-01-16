@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import Button from "../components/Button";
 
 const SelectRentingPeriodPage = () => {
   const { id } = useParams();
@@ -39,9 +40,9 @@ const SelectRentingPeriodPage = () => {
         />
         <h1>Perioada: {rentingPeriod} zile</h1>
         <h1>Preț: {calculatePrice()} RON</h1>
-        <button className="button button1" onClick={goToRentMoviePage}>
+        <Button variant="1" onClick={goToRentMoviePage}>
           Continuă
-        </button>
+        </Button>
       </div>
     </div>
   );

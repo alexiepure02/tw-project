@@ -11,6 +11,8 @@ import Button from "./Button";
 
 import Sidebar from "./Sidebar";
 
+import logo from "../assets/logo.png";
+
 const Header = () => {
   const isAuthenticated = checkIfAuthenticated();
   const [headerPrefix, setHeaderPrefix] = useState();
@@ -37,23 +39,24 @@ const Header = () => {
   return (
     <>
       <div className={"header header-" + headerPrefix + "signed"}>
-        <h1
-          className="logo"
+        <div
+          className="logo-container"
           onClick={(e) =>
             isAuthenticated ? navigate("/movies") : navigate("/")
           }
         >
-          BunnyTV
-        </h1>
+          <img src={logo} width="65px" height="65px" />
+          <h1>BunnyTV</h1>
+        </div>
         {!isAuthenticated ? (
-          <>
-            <Button variant="2" onClick={onAuthenticationClick}>
-              Autentificare
-            </Button>
+          <div className="buttons-container">
             <Button variant="2" onClick={onRegisterClick}>
               Inregistrare
             </Button>
-          </>
+            <Button variant="2" onClick={onAuthenticationClick}>
+              Autentificare
+            </Button>
+          </div>
         ) : (
           <Sidebar
             pageWrapId={"page-wrap"}

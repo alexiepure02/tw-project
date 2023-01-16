@@ -37,6 +37,19 @@ input {
   cursor: pointer;
 }
 
+.error {
+  color: red;
+}
+
+.container {
+  background-color: $secondary-color;
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  padding: 35px;
+  box-shadow: 0px 10px 50px 1px rgb(10, 10, 10);
+}
+
 // header
 
 .header {
@@ -48,18 +61,29 @@ input {
   z-index: 2;
 }
 
-.header .logo {
-  margin: 6px;
+.header .logo-container {
+  display: flex;
+  align-items: center;
+  padding: 10px;
   float: left;
-  padding: 8px;
 }
 
-.header .logo:hover {
+.header .logo-container:hover {
   cursor: pointer;
 }
 
-.header-unsigned Button {
-  float: right;
+.header .logo-container h1 {
+  margin: 0px 0px 0px 10px;
+}
+
+.header-unsigned .buttons-container {
+  margin-right: 15px;
+}
+
+.header-unsigned {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .header .menu-burger {
@@ -228,10 +252,64 @@ header {
 }
 
 .home-signed {
-  margin-top: 100px;
   color: $text-color;
   display: flex;
   flex-direction: column;
+}
+
+.home-signed .main-movie-container {
+  height: 80vh;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.home-signed .main-movie {
+  height: 100vh;
+  width: 100vw;
+  z-index: -1;
+  object-fit: cover;
+  filter: saturate(140%);
+  position: absolute;
+}
+
+.home-signed .main-movie-overlay {
+  height: 100vh;
+  width: 100%;
+  background: linear-gradient(
+    transparent,
+    rgba($primary-color, 0.0714),
+    rgba($primary-color, 0.1428),
+    rgba($primary-color, 0.2856),
+    rgba($primary-color, 0.3333),
+    rgba($primary-color, 0.4285),
+    rgba($primary-color, 0.5),
+    rgba($primary-color, 0.5713),
+    rgba($primary-color, 0.6427),
+    rgba($primary-color, 0.7142),
+    rgba($primary-color, 0.7856),
+    rgba($primary-color, 0.857),
+    rgba($primary-color, 0.9284),
+    rgba($primary-color, 1),
+    rgba($primary-color, 1),
+    rgba($primary-color, 1),
+    rgba($primary-color, 1),
+    rgba($primary-color, 1)
+  );
+  z-index: -1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.home-signed .main-movie-overlay .title {
+  max-width: 600px;
+  font-size: 2rem;
+  margin-left: 32px;
+}
+.home-signed .main-movie-overlay button {
+  margin-left: 32px;
 }
 
 .home-signed .carousel-movies {
@@ -291,10 +369,6 @@ header {
   .details {
     display: inline;
   }
-
-  // .buttons {
-  //   display: flex;
-  // }
 }
 
 .movie-cover-card {
@@ -320,18 +394,6 @@ header {
   }
 }
 
-.buttons {
-  display: none;
-  position: absolute;
-  bottom: 8px;
-  right: 16px;
-
-  .play-button {
-    cursor: pointer;
-    margin: 0px 3px;
-  }
-}
-
 // sidebar
 
 /* Position and sizing of burger button */
@@ -339,12 +401,7 @@ header {
   position: relative;
   width: 45px;
   height: 30px;
-
-  margin: 20px;
-
-  // right: 25px;
-  // top: 20px;
-  /* right: 0; */
+  margin: 27px;
   float: right;
 }
 /* Color/shape of burger icon bars */
@@ -361,8 +418,8 @@ header {
 .bm-cross-button {
   height: 24px;
   width: 24px;
-  margin-right: 17px;
-  margin-top: 11px;
+  margin-right: 29px;
+  margin-top: 22px;
 }
 
 /* Color/shape of close button cross */
@@ -512,9 +569,9 @@ h4 {
 .grid-movies {
   margin: 0px 25px;
   display: grid;
-
+  place-content: center;
   grid-gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  grid-template-columns: repeat(auto-fit, 160px);
 }
 
 @media (max-width: 768px) {
@@ -528,7 +585,45 @@ h4 {
 
 .account {
   color: $text-color;
-  margin-top: 100px;
+  margin-top: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.account .container {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.account h1 {
+  font-size: 2em;
+  margin: 10px 0px 20px 0px;
+}
+
+.account h2 {
+  font-size: 1.3em;
+  margin: 5px 0px 20px 0px;
+}
+
+.account h3 {
+  font-size: 1.1em;
+  margin: 0px;
+}
+
+.account .buttons {
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+
+  .account .container {
+    padding: 20px;
+  }
+  
 }
 
 // icon
@@ -573,15 +668,6 @@ h4 {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.rent-movie .container {
-  background-color: $secondary-color;
-  display: flex;
-  align-items: center;
-  border-radius: 8px;
-  padding: 35px;
-  box-shadow: 0px 10px 50px 1px rgb(10, 10, 10);
 }
 
 .rent-movie .movie-info {
@@ -638,6 +724,7 @@ h4 {
 
 .completion .container {
   background-color: $secondary-color;
+  flex-direction: column;
   border-radius: 8px;
   padding: 35px;
   box-shadow: 0px 10px 50px 1px rgb(10, 10, 10);

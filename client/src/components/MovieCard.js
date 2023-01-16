@@ -19,11 +19,7 @@ const MovieCard = (props) => {
         <h1 className="title">{props.movie.title}</h1>
         <p className="duration">{props.movie.duration}</p>
       </div>
-      {/* <div className="buttons">
-        <h1 className="play-button" onClick={play}>
-          <AiFillPlayCircle />
-        </h1>
-      </div> */}
+
     </div>
   );
 };

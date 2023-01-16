@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useStripe, useElements } from "@stripe/react-stripe-js";
 import { useNavigate, useParams } from "react-router-dom";
 import { getUserInfo } from "../functions/authentication";
+import Button from "./Button";
 
 export default function CheckoutForm(props) {
   const stripe = useStripe();
@@ -63,16 +64,15 @@ export default function CheckoutForm(props) {
   return (
     <form className="payment-form" onSubmit={handleSubmit}>
       <PaymentElement />
-      <button
-        disabled={isProcessing || !stripe || !elements}
-        className="button button2"
-      >
+      <Button disabled={isProcessing || !stripe || !elements} variant="2">
         <span id="button-text">
           {isProcessing ? "Processing ... " : "Pay now"}
         </span>
-      </button>
+      </Button>
       {/* Show any error or success messages */}
-      {message && <div id="payment-message">{message}</div>}
+      {message && (
+        <div id="payment-message">{<p className="error">{message}</p>}</div>
+      )}
     </form>
   );
 }
