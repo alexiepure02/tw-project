@@ -1,65 +1,81 @@
 const router = require("express").Router();
-const Movie = require("../models/Movie");
+const axios = require("axios");
+//const Rent = requrie("../src/models/Rent");
 
-//AddMovie
-router.post("/addMovie", async (req, res) => {
-    const newMovie = Movie({
-        title : req.body.title,
-        details :  req.body.details,
-        genre : req.body.genre,
-        releaseDate : req.body.releaseDate,
-        duration : req.body.duration
-        //img
-        //imgThumb
-        //video
-    });
+//filmele din ultimul an
 
-    try{
-        const movie = await newMovie.save();
-        console.log(movie);
-        res.status(201).json(movie); 
-    } catch (err) {
-        res.status(500).json(err);
-    }
-})
+router.get("/getLastYearMovie", async(req, res) =>{
+    const options = {
+        method: 'GET',
+        url: 'https://imdb-api.com/en/API/MostPopularMovies/k_pke1qzq2'
+      };
+      
+      axios.request(options).then(function (response) {
+        const aMovieList = response.data.items;
+        const date = new Date().getFullYear();
+        const aMoviesByYear = aMovieList.filter(item => item.year == date);
 
-//get movies by user id
-router.get("/byuserid/:id", async (req, res) =>{
-    Movie.findOne({genre: req.params.id}).limit(15).exec(function(err, docs) {
-        res.status(200).json(docs)
+        res.json(aMoviesByYear);
+      }).catch(function (error) {
+          console.error(error);
       });
-
 })
 
-//get movies by genre 
-router.get("/bygenre/:genre", async(req, res) =>{
-    
+//cele mai populare filme
+router.get("/getPopularMovie", async(req, res) =>{
+    const options = {
+        method: 'GET',
+        url: 'https://imdb-api.com/en/API/MostPopularMovies/k_pke1qzq2'
+      };
+      
+      axios.request(options).then(function (response) {
+        const aMovieList = response.data.items;
+        const aMoviesByPopular = aMovieList.sort((a, b) => (a.imDbRatingCount < b.imDbRatingCount) ? 1 : -1);
 
-    //ID, title, duration, image
-
-    Movie.find({genre: req.params.genre}).limit(15).exec(function(err, docs) {
-        res.status(200).json(docs)
+        res.json(aMoviesByPopular);
+      }).catch(function (error) {
+          console.error(error);
       });
-
 })
 
-//get movies by released in the last year
-router.get("/thisyear", async(req, res) =>{
-    
-    const currentTime = new Date();
-    const year = currentTime.getFullYear();
+//dupa rating
+router.get("/getMoviesByRating", async(req, res) =>{
+    const options = {
+        method: 'GET',
+        url: 'https://imdb-api.com/en/API/MostPopularMovies/k_pke1qzq2'
+      };
+      
+      axios.request(options).then(function (response) {
+        const aMovieList = response.data.items;
+        const aMoviesByRaiting = aMovieList.sort((a, b) => (a.imDbRating < b.imDbRating) ? 1 : -1);
 
-    Movie.find({releaseDate: year}).limit(15).exec(function(err, docs) {
-        res.status(200).json(docs)
+        res.json(aMoviesByRaiting);
+      }).catch(function (error) {
+          console.error(error);
       });
-
 })
 
-//get movie by id
-router.get("/:id", async (req, res) =>{
-    Movie.findOne({genre: req.params.id}).limit(15).exec(function(err, docs) {
-        res.status(200).json(docs)
-      });
+//filme inchiriate
+// router.get("/getRentedMovies", async(req, res) =>{
+//     const options = {
+//         method: 'GET',
+//         url: 'https://imdb-api.com/en/API/MostPopularMovies/k_pke1qzq2'
+//       };
+      
+//       axios.request(options).then(function (response) {
+//         const aMovieList = response.data.items;
+//         const date = new Date().getFullYear();
+//         const aMoviesByYear = aMovieList.sort((a, b) => (a.imDbRating < b.imDbRating) ? 1 : -1);
 
-})
+//         Rent.findOne({idUser: req.body.idUser}).exec(function(err, docs) {
+//             res.status(200).json(docs)
+//           });
+
+//         res.json(aMoviesByYear);
+//       }).catch(function (error) {
+//           console.error(error);
+//       });
+// })
+
+
 module.exports = router; 

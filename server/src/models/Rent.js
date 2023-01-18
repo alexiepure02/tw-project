@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 
-const MovieSchema = new mongoose.Schema({
-    title: {type:String, require:true, unique:true},
-    idMovie: {type : int}, 
-    idUser: {type : int},
+const RentSchema = new mongoose.Schema({
+    title: {type:String },
+    idMovie: {type : String}, 
+    idUser: {type : String},
     startDate: {type : Date},
     endDate: {type : Date},
     processed: {type : Boolean}
@@ -11,4 +11,4 @@ const MovieSchema = new mongoose.Schema({
 },
 {timestamps: true});
 
-module.exports = mongoose.model("Movie", MovieSchema);
+module.exports = mongoose.model("Rent", RentSchema);

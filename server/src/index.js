@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const authRoute = require("../src/routes/auth");
 const usersRoute = require("../src/routes/users");
 const movieRoutes = require("../src/routes/movies");
+const rentRoute = require("../src/routes/rent");
 const dotenv = require("dotenv");
 
 dotenv.config("./.env");
@@ -28,10 +29,11 @@ app.use(cors(corsOptions));
 
 app.use("", authRoute);
 
-//app.use("", usersRoute);
 app.use("", movieRoutes);
 
-app.use("/movies", movieRoutes);
+app.use("/users", usersRoute);
+
+app.use("", rentRoute);
 
 // stripe
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
