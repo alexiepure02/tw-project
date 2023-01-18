@@ -10,8 +10,11 @@ const HomePageSignedIn = () => {
 
   const navigate = useNavigate();
 
+  const fetchAndSetMovies = async () => { 
+    setMovies(await getMovies());
+  }
   useEffect(() => {
-    setMovies(getMovies(5));
+    fetchAndSetMovies();
     setMainMovie(getMovie(13));
   }, []);
 

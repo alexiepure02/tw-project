@@ -3,10 +3,10 @@ import ScrollContainer from "react-indiana-drag-scroll";
 import MovieCard from "./MovieCard";
 
 const createMovieCards = (movies) =>
-  movies.map((movie, index) => <MovieCard key={index} movie={movie} />);
+  movies.map((movie) => <MovieCard key={movie.id} movie={movie} />);
 
 const MoviesCarousel = (props) => {
-  const [movieCards, setMovieCards] = useState("");
+  const [movieCards, setMovieCards] = useState(null);
 
   useEffect(() => {
     setMovieCards(createMovieCards(props.movies));
