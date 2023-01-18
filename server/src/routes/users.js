@@ -1,37 +1,49 @@
 const router = require("express").Router();
 const User = require("../models/User");
 const CryptoJS = require("crypto-js");
-const verify = require("../verifyToken");
+const jwt = require("jsonwebtoken");
 
-//UPDATE -> working on
-
-router.put("/:id", verify, async (req, res) =>{
-
-    if(req.user.id === req.params.id || req.user.isAdmin) {
-        if (req.body.password) {
-            req.body.password = CryptoJS.AES.encrypt(
-                req.body.password,
-                process.env.SECRET_KEY
-            ).toString()
+//UPDATE Password
+router.put('/changepassword', (req, res) => {
+    // Verify the access token
+    jwt.verify(req.headers.authorization, process.env.JWT_SECRET, (err, decoded) => {
+      if (err) {
+        console.log(req.headers.authorization);
+        return res.status(401).json({ message: 'Invalid token' });
+      }
+      // Find the user in the database
+      User.findOne({ _id: decoded._id }, (err, user) => {
+        if (err) {
+          return res.status(500).json({ message: 'Internal server error' });
         }
-    
-        try{
-            const updatedUser = await User.findByIdAndUpdate(req.params.id, {$set : request.body})
-            req.status(200).json(updatedUser);
-
-        } catch(err){
-            res.status(500).json(err);
+        // Compare the current password with the one provided
+        const currentPassword = CryptoJS.AES.decrypt(user.password, process.env.JWT_SECRET);
+        if (currentPassword.toString(CryptoJS.enc.Utf8) !== req.body.currentPassword) {
+          return res.status(401).json({ message: 'Incorrect current password' });
         }
-    }else {
-        res.status(403).json("You can't update your account")
-    }
+        // Encrypt the new password
+        const newPassword = CryptoJS.AES.encrypt(req.body.newPassword, process.env.JWT_SECRET);
+        // Update the user's password
+        user.password = newPassword.toString();
+        user.save((err) => {
+          if (err) {
+            return res.status(500).json({ message: 'Internal server error' });
+          }
+          return res.json({ message: 'Password changed successfully' });
+        });
+      });
+    });
+  });
 
-})
+
 
 //DELETE
 //GET
 //GET ALL
 //GET USER STATS
 
+
+
+  
 
 module.exports = router;
