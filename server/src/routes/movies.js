@@ -1,9 +1,8 @@
 const router = require("express").Router();
 const axios = require("axios");
-//const Rent = requrie("../src/models/Rent");
+const Rent = require("../models/Rent");
 
-//filmele din ultimul an
-
+//Get movies from last year 
 router.get("/getLastYearMovie", async(req, res) =>{
     const options = {
         method: 'GET',
@@ -21,8 +20,8 @@ router.get("/getLastYearMovie", async(req, res) =>{
       });
 })
 
-//cele mai populare filme
-router.get("/getPopularMovie", async(req, res) =>{
+//Get popular movie  ->for trending now
+router.get("/getPopularMovies", async(req, res) =>{
     const options = {
         method: 'GET',
         url: 'https://imdb-api.com/en/API/MostPopularMovies/k_pke1qzq2'
@@ -38,7 +37,7 @@ router.get("/getPopularMovie", async(req, res) =>{
       });
 })
 
-//dupa rating
+//Get movies by renting 
 router.get("/getMoviesByRating", async(req, res) =>{
     const options = {
         method: 'GET',
@@ -55,27 +54,35 @@ router.get("/getMoviesByRating", async(req, res) =>{
       });
 })
 
-//filme inchiriate
-// router.get("/getRentedMovies", async(req, res) =>{
-//     const options = {
-//         method: 'GET',
-//         url: 'https://imdb-api.com/en/API/MostPopularMovies/k_pke1qzq2'
-//       };
+//Check if movie rented
+router.get("/checkMovieRented", async(req, res) =>{
+    Rent.findOne({id: req.params.idUser, movie : req.params.idMovie }).exec(function(err, docs) {
+        res.status(200).json(docs.processed)
+      });
+})
+
+//Get rented movies 
+router.get("/getRentedMovies", async(req, res) =>{
+    console.log("im here")
+    Rent.find({id: req.body.idUser}).exec(function(err, docs) {
+        console.log(docs)
+        res.json(docs)
+      });
+})
+
+//Get movie by id 
+router.get("/movie/:id", async(req, res) =>{
+    const options = {
+        method: 'GET',
+        url: `https://imdb-api.com/en/API/Title/k_pke1qzq2/${req.params.id}`
+      };
       
-//       axios.request(options).then(function (response) {
-//         const aMovieList = response.data.items;
-//         const date = new Date().getFullYear();
-//         const aMoviesByYear = aMovieList.sort((a, b) => (a.imDbRating < b.imDbRating) ? 1 : -1);
-
-//         Rent.findOne({idUser: req.body.idUser}).exec(function(err, docs) {
-//             res.status(200).json(docs)
-//           });
-
-//         res.json(aMoviesByYear);
-//       }).catch(function (error) {
-//           console.error(error);
-//       });
-// })
-
+      console.log(options.url)
+      axios.request(options).then(function (response) {
+        res.json(response.data);
+      }).catch(function (error) {
+          console.error(error);
+      });
+})
 
 module.exports = router; 

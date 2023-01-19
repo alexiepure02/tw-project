@@ -6,6 +6,7 @@ const RentSchema = new mongoose.Schema({
     idUser: {type : String},
     startDate: {type : Date},
     endDate: {type : Date},
+    image: {type : String},
     processed: {type : Boolean}
 
 },

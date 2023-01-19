@@ -9,6 +9,7 @@ router.post("/paymentApproval", async (req, res) => {
             idUser: req.body.idUser,
             startDate: req.body.startDate,
             endDate: req.body.endDate,
+            image: req.body.image,
             processed: req.body.processed
         });
         console.log(newRent);
