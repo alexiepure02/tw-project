@@ -4,6 +4,8 @@ import { useStripe, useElements } from "@stripe/react-stripe-js";
 import { useNavigate, useParams } from "react-router-dom";
 import { getUserInfo } from "../functions/authentication";
 import Button from "./Button";
+import axios from "axios";
+import dayjs from "dayjs";
 
 export default function CheckoutForm(props) {
   const stripe = useStripe();
@@ -32,7 +34,6 @@ export default function CheckoutForm(props) {
     const { paymentIntent, error } = await stripe.confirmPayment({
       elements,
       redirect: "if_required",
-      description: "User Id: " + userInfo.id + "; Movie Id: " + id,
       receipt_email: userInfo.email,
       // confirmParams: {
       //   // Make sure to change this to your payment completion page
@@ -42,6 +43,21 @@ export default function CheckoutForm(props) {
 
     if (paymentIntent !== undefined) {
       // add movie to user's rented movies
+
+      const currentDate = dayjs().format("YYYY-MM-DD");
+      const expirationDate = dayjs()
+        .add(props.period, "day")
+        .format("YYYY-MM-DD");
+
+      await axios.post("http://localhost:8800/paymentApproval", {
+        title: "movie.title",
+        idMovie: id,
+        idUser: userInfo.id,
+        startDate: currentDate,
+        endDate: expirationDate,
+        image: "movie.image",
+        processed: "true",
+      });
 
       navigate("/movie/" + id + "/completed-payment", {
         state: {
@@ -64,11 +80,14 @@ export default function CheckoutForm(props) {
   return (
     <form className="payment-form" onSubmit={handleSubmit}>
       <PaymentElement />
-      <Button disabled={isProcessing || !stripe || !elements} variant="2">
+      <button
+        disabled={isProcessing || !stripe || !elements}
+        className="button button2"
+      >
         <span id="button-text">
           {isProcessing ? "Processing ... " : "Pay now"}
         </span>
-      </Button>
+      </button>
       {/* Show any error or success messages */}
       {message && (
         <div id="payment-message">{<p className="error">{message}</p>}</div>
