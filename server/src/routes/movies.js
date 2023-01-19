@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const axios = require("axios");
+//const Math = require("math");
 const Rent = require("../models/Rent");
 
 //Get movies from last year 
@@ -80,6 +81,23 @@ router.get("/movie/:id", async(req, res) =>{
       console.log(options.url)
       axios.request(options).then(function (response) {
         res.json(response.data);
+      }).catch(function (error) {
+          console.error(error);
+      });
+})
+
+//Get random movie
+router.get("/getRandomMovie", async(req, res) =>{
+    const options = {
+        method: 'GET',
+        url: 'https://imdb-api.com/en/API/MostPopularMovies/k_pke1qzq2'
+      };
+      
+      axios.request(options).then(function (response) {
+        var random = Math.floor(Math.random() * 99);
+        const randomMovie = response.data.items[random];
+
+        res.json(randomMovie);
       }).catch(function (error) {
           console.error(error);
       });
