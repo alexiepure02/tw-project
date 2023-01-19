@@ -1,23 +1,26 @@
 import { useEffect, useState } from "react";
 import MovieCard from "../components/MovieCard";
+import MoviesGrid from "../components/MoviesGrid";
 import { getRentedMovies } from "../functions/api";
-
-const createMovieCards = () => {
-  const movies = getRentedMovies();
-  return movies.map((movie, index) => <MovieCard key={index} movie={movie} />);
-};
 
 const RentedMoviesPage = (props) => {
   const [rentedMovieCards, setRentedMovieCards] = useState("");
 
+  const createMovieCards = async () => {
+    const movies = await getRentedMovies();
+    setRentedMovieCards(
+      movies.map((movie) => <MovieCard key={movie.id} movie={movie} />)
+    );
+  };
+
   useEffect(() => {
-    setRentedMovieCards(createMovieCards());
+    createMovieCards();
   }, []);
 
   return (
     <div className="rented-movies">
       <h1 className="rented-movies-title">Filmele tale inchiriate</h1>
-      <div className="grid-movies">{rentedMovieCards}</div>
+      <MoviesGrid movieCards={rentedMovieCards} />
     </div>
   );
 };

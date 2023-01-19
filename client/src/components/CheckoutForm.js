@@ -50,18 +50,18 @@ export default function CheckoutForm(props) {
         .format("YYYY-MM-DD");
 
       await axios.post("http://localhost:8800/paymentApproval", {
-        title: "movie.title",
+        title: props.movieTitle,
         idMovie: id,
         idUser: userInfo.id,
         startDate: currentDate,
         endDate: expirationDate,
-        image: "movie.image",
+        image: props.movieImage,
         processed: "true",
       });
 
       navigate("/movie/" + id + "/completed-payment", {
         state: {
-          movieName: props.movieName,
+          movieName: props.fullTitle,
           period: props.period,
         },
       });

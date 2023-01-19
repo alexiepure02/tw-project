@@ -1,7 +1,7 @@
-$primary-color: #26255b;
-$secondary-color: #39407f;
+$primary-color: #280000;
+$secondary-color: #570000;
 $text-color: #e7ecef;
-$button-color: #657ed4;
+$button-color: #b10f2e;
 
 body {
   background-color: $primary-color;
@@ -76,6 +76,17 @@ input {
   margin: 0px 0px 0px 10px;
 }
 
+.header .search {
+  position: absolute;
+  right: 100px;
+  top: 17px;
+}
+
+.header .search .search-input {
+  background-color: $primary-color;
+  width: 200px;
+}
+
 .header-unsigned .buttons-container {
   margin-right: 15px;
 }
@@ -92,6 +103,11 @@ input {
   float: right;
   text-align: center;
   margin: 25px;
+}
+
+.searched-movies {
+  color: $text-color;
+  margin-top: 120px;
 }
 
 // button
@@ -246,10 +262,6 @@ input {
 }
 
 // home signed
-
-header {
-  display: inline;
-}
 
 .home-signed {
   color: $text-color;
@@ -534,6 +546,7 @@ h4 {
 }
 
 .content .right {
+  flex: 1 0 30%;
   padding: 25px;
   background: rgba(29, 32, 32, 0.4);
 }
@@ -619,11 +632,9 @@ h4 {
 }
 
 @media (max-width: 768px) {
-
   .account .container {
     padding: 20px;
   }
-  
 }
 
 // icon
@@ -688,7 +699,7 @@ h4 {
 }
 
 @media (max-width: 768px) {
-  .rent-movie .payment-card {
+  .rent-movie .container {
     flex-direction: column;
   }
 

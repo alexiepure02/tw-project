@@ -4,14 +4,20 @@ import { useNavigate } from "react-router-dom";
 const MovieCard = (props) => {
   const navigate = useNavigate();
 
+  const goToMovie = () => {
+    if (props.hasOwnProperty("searchInputRef")) {
+      props.searchInputRef.current.value = "";
+      props.setsearchedMovieCards(null);
+    }
+    if (props.movie.hasOwnProperty("idMovie")) {
+      navigate("/movie/" + props.movie.idMovie);
+    } else {
+      navigate("/movie/" + props.movie.id);
+    }
+  };
+
   return (
-    <div
-      className="card"
-      onClick={(e) => {
-        navigate("/movie/" + props.movie.id);
-        // navigate(0);
-      }}
-    >
+    <div className="card" onClick={goToMovie}>
       <div className="card-gradient">
         <img
           className="movie-cover-card"
@@ -22,7 +28,7 @@ const MovieCard = (props) => {
       </div>
       <div className="details">
         <h1 className="title">{props.movie.title}</h1>
-        <p className="duration">{props.movie.rank}</p>
+        <p className="duration">{props.movie.year}</p>
       </div>
     </div>
   );

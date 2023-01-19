@@ -32,16 +32,19 @@ const RentMoviePage = () => {
     );
     var { publishableKey, clientSecret } = await response.data;
 
-    console.log(publishableKey);
+    // console.log(publishableKey);
     setStripePromise(loadStripe(publishableKey));
 
-    console.log(clientSecret);
+    // console.log(clientSecret);
     setClientSecret(clientSecret);
   };
 
-  useEffect(() => {
-    setMovie(getMovie(id));
+  const fetchAndSetMovie = async () => {
+    setMovie(await getMovie(id));
+  };
 
+  useEffect(() => {
+    fetchAndSetMovie();
     createPaymentIntent();
   }, []);
 
@@ -53,7 +56,12 @@ const RentMoviePage = () => {
             <h2 className="title">{movie.title}</h2>
             <h3 className="period">Perioadă: {state.period} zile</h3>
             <h3 className="price">Preț: {state.price} lei</h3>
-            <img className="movie-cover-card" src={movie.thumbnailCover} />
+            <img
+              className="movie-cover-card"
+              src={movie.image}
+              width="160px"
+              height="240px"
+            />
           </div>
           <div className="payment-info">
             {clientSecret && stripePromise && (
@@ -63,7 +71,8 @@ const RentMoviePage = () => {
               >
                 <CheckoutForm
                   movieId={id}
-                  movieName={movie.title}
+                  movieTitle={movie.title}
+                  movieImage={movie.image}
                   period={state.period}
                 />
               </Elements>

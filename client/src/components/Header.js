@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import {
   checkIfAuthenticated,
@@ -12,10 +12,20 @@ import Button from "./Button";
 import Sidebar from "./Sidebar";
 
 import logo from "../assets/logo.png";
+import { AiOutlineSearch } from "react-icons/ai";
+import RentedMoviesPage from "../pages/RentedMoviesPage";
+import MoviesCarousel from "./MoviesCarousel";
+import MoviesGrid from "./MoviesGrid";
+import { search } from "../functions/api";
+import MovieCard from "./MovieCard";
+import debounce from "lodash.debounce";
 
 const Header = () => {
   const isAuthenticated = checkIfAuthenticated();
   const [headerPrefix, setHeaderPrefix] = useState();
+  const [searchedMovieCards, setsearchedMovieCards] = useState(null);
+
+  const ref = useRef(null);
 
   const navigate = useNavigate();
 
@@ -35,6 +45,37 @@ const Header = () => {
   const onRegisterClick = () => {
     navigate("/register");
   };
+
+  const createMovieCards = (movies) => {
+    setsearchedMovieCards(
+      movies.map((movie) => (
+        <MovieCard
+          key={movie.id}
+          searchInputRef={ref}
+          setsearchedMovieCards={setsearchedMovieCards}
+          movie={movie}
+        />
+      ))
+    );
+  };
+
+  const handleSearchChange = async (e) => {
+    debouncedChangeHandler(e.target.value);
+  };
+
+  const debouncedChangeHandler = useCallback(
+    debounce(async (value) => {
+      if (value == "") {
+        setsearchedMovieCards(null);
+      } else {
+        console.log(value);
+        const foundMovies = await search(value);
+        console.log(foundMovies);
+        createMovieCards(foundMovies.results);
+      }
+    }, 500),
+    []
+  );
 
   return (
     <>
@@ -58,14 +99,32 @@ const Header = () => {
             </Button>
           </div>
         ) : (
-          <Sidebar
-            pageWrapId={"page-wrap"}
-            outerContainerId={"outer-container"}
-            right
-          />
+          <>
+            <Sidebar
+              pageWrapId={"page-wrap"}
+              outerContainerId={"outer-container"}
+              right
+            />
+            <div className="search">
+              <input
+                ref={ref}
+                className="search-input"
+                id="search"
+                name="search"
+                placeholder="Caută.."
+                onChange={handleSearchChange}
+              />
+            </div>
+          </>
         )}
       </div>
-      <Outlet />
+      {searchedMovieCards ? (
+        <div className="searched-movies">
+          <MoviesGrid movieCards={searchedMovieCards} />
+        </div>
+      ) : (
+        <Outlet />
+      )}
     </>
   );
 };

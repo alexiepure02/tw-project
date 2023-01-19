@@ -1,21 +1,40 @@
 import React, { useEffect, useState } from "react";
+import { AiOutlineSearch } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import MoviesCarousel from "../components/MoviesCarousel";
-import { getMovie, getMovies } from "../functions/api";
+import {
+  getLastYearMovie,
+  getMostPopularMovies,
+  getMoviesByRating,
+  getRandomMovie,
+} from "../functions/api";
 
 const HomePageSignedIn = () => {
   const [mainMovie, setMainMovie] = useState(null);
-  const [movies, setMovies] = useState(null);
-
+  const [sections, setSections] = useState(null);
+  
   const navigate = useNavigate();
 
-  const fetchAndSetMovies = async () => { 
-    setMovies(await getMovies());
-  }
+  const fetchAndSetMovies = async () => {
+    const lastYear = await getLastYearMovie();
+    const mostPopular = await getMostPopularMovies();
+    const byRating = await getMoviesByRating();
+
+    setSections([
+      { sectionTitle: "Filme din ultimul an", movies: lastYear },
+      { sectionTitle: "Cele mai populare filme", movies: mostPopular },
+      { sectionTitle: "Cele mai bine cotate filme", movies: byRating },
+    ]);
+  };
+
+  const fetchAndSetMainMovie = async () => {
+    setMainMovie(await getRandomMovie());
+  };
+
   useEffect(() => {
     fetchAndSetMovies();
-    setMainMovie(getMovie(13));
+    fetchAndSetMainMovie();
   }, []);
 
   const goToMainMovie = () => {
@@ -27,7 +46,7 @@ const HomePageSignedIn = () => {
       <div className="home-signed">
         {mainMovie && (
           <div className="main-movie-container">
-            <img className="main-movie" src={mainMovie.cover} />
+            <img className="main-movie" src={mainMovie.image} />
             <div className="main-movie-overlay">
               <h1 className="title">{mainMovie.title}</h1>
               <Button variant="1" onClick={goToMainMovie}>
@@ -36,18 +55,16 @@ const HomePageSignedIn = () => {
             </div>
           </div>
         )}
-        {movies && (
+        {sections && (
           <>
-            <MoviesCarousel movies={movies} sectionTitle="Section title" />
-            <MoviesCarousel movies={movies} sectionTitle="Section title" />
-            <MoviesCarousel movies={movies} sectionTitle="Section title" />
-            <MoviesCarousel movies={movies} sectionTitle="Section title" />
-            <MoviesCarousel movies={movies} sectionTitle="Section title" />
-            <MoviesCarousel movies={movies} sectionTitle="Section title" />
-            <MoviesCarousel movies={movies} sectionTitle="Section title" />
-            <MoviesCarousel movies={movies} sectionTitle="Section title" />
-            <MoviesCarousel movies={movies} sectionTitle="Section title" />
-            <MoviesCarousel movies={movies} sectionTitle="Section title" />
+            {sections.map((section) => {
+              return (
+                <MoviesCarousel
+                  movies={section.movies}
+                  sectionTitle={section.sectionTitle}
+                />
+              );
+            })}
           </>
         )}
       </div>
